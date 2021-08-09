@@ -2,6 +2,6 @@ import { gql } from "apollo-server-express";
 
 export default gql`
   type Query {
-    searchUsers(searchTerm: String!): [User]
+    searchUsers(searchTerm: String!, page: Int): [User]
   }
 `;

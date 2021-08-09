@@ -1,8 +1,10 @@
 import client from "../../client";
 
+const takeNum = 10;
+
 export default {
   Query: {
-    searchUsers: (_, { searchTerm }) =>
+    searchUsers: (_, { searchTerm, page }) =>
       client.user.findMany({
         where: {
           OR: [
@@ -23,6 +25,8 @@ export default {
             },
           ],
         },
+        take: takeNum,
+        skip: page ? (page - 1) * takeNum : 0,
       }),
   },
 };
