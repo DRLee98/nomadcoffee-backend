@@ -1,6 +1,5 @@
 import client from "../client";
-
-const takeNum = 2;
+import { takeNum } from "../common/common.constants";
 
 export default {
   User: {

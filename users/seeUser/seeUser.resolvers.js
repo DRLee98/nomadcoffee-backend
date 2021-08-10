@@ -1,4 +1,5 @@
 import client from "../../client";
+import { takeNum } from "../../common/common.constants";
 
 export default {
   Query: {
@@ -11,7 +12,6 @@ export default {
             error: "User not found.",
           };
         }
-        const takeNum = 10;
         const followers = await user.followers({
           take: takeNum,
           skip: followersPage ? (followersPage - 1) * takeNum : 0,

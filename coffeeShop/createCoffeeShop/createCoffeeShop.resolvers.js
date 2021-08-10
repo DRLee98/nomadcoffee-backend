@@ -1,0 +1,52 @@
+import client from "../../client";
+import { protectResolver } from "../../users/users.utils";
+import { getCategoryObj, getPhotoObj } from "../coffeeShop.utils";
+
+export default {
+  Mutation: {
+    createCoffeeShop: protectResolver(
+      async (
+        _,
+        { name, latitude, longitude, categories, photos },
+        { loggedInUser },
+      ) => {
+        try {
+          const categoryObj = getCategoryObj(categories);
+          const photoObj = await getPhotoObj(photos);
+          const coffeeShop = await client.coffeeShop.create({
+            data: {
+              name,
+              latitude,
+              longitude,
+              user: {
+                connect: {
+                  id: loggedInUser.id,
+                },
+              },
+              ...(categoryObj.length > 0 && {
+                categories: {
+                  connectOrCreate: categoryObj,
+                },
+              }),
+              ...(photoObj.length > 0 && {
+                photos: {
+                  createMany: { data: photoObj },
+                },
+              }),
+            },
+          });
+          return {
+            ok: true,
+            id: coffeeShop.id,
+          };
+        } catch (error) {
+          console.log(error);
+          return {
+            ok: false,
+            error,
+          };
+        }
+      },
+    ),
+  },
+};
