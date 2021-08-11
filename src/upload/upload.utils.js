@@ -1,3 +1,4 @@
+import AWS from "aws-sdk";
 import { createWriteStream } from "fs";
 
 const makeFileName = (filename) =>
@@ -19,6 +20,31 @@ const localFileUpload = async (file) => {
   }
 };
 
-const uploader = (file) => localFileUpload(file);
+AWS.config.update({
+  credentials: {
+    accessKeyId: process.env.AWS_KEY,
+    secretAccessKey: process.env.AWS_SECRET,
+  },
+});
+
+const awsUploader = async (file) => {
+  if (file) {
+    const { filename, createReadStream } = await file;
+    const readStream = createReadStream();
+    const newFilename = makeFileName(filename);
+    const { Location } = await new AWS.S3()
+      .upload({
+        Bucket: "nomad-coffee",
+        Key: newFilename,
+        ACL: "public-read",
+        Body: readStream,
+      })
+      .promise();
+    return Location;
+  }
+  return null;
+};
+
+const uploader = (file) => awsUploader(file);
 
 export default uploader;
