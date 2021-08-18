@@ -27,7 +27,6 @@ const getSlug = (category) => {
 
 export const getPhotoObj = async (photos) => {
   if (photos) {
-    console.log(photos);
     return await Promise.all(
       photos.map(async (photo) => {
         const url = await uploader(photo);

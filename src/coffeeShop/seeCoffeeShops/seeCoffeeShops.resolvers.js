@@ -9,6 +9,7 @@ export default {
         skip: page ? (page - 1) * takeNum : 0,
         include: {
           user: true,
+          photos: true,
         },
       }),
   },

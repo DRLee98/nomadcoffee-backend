@@ -13,7 +13,6 @@ export default {
         try {
           const categoryObj = getCategoryObj(categories);
           const photoObj = await getPhotoObj(photos);
-          console.log(photoObj);
           const coffeeShop = await client.coffeeShop.create({
             data: {
               name,
