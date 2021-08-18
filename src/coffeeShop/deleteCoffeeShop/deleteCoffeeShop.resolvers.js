@@ -22,11 +22,7 @@ export default {
         }
         await client.coffeeShopPhoto.deleteMany({
           where: {
-            coffeeShopId: {
-              some: {
-                id,
-              },
-            },
+            coffeeShopId: id,
           },
         });
         await client.coffeeShop.delete({
