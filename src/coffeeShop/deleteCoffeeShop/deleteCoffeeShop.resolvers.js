@@ -1,10 +1,9 @@
 import client from "../../client";
 import { protectResolver } from "../../users/users.utils";
-import { getCategoryObj, getPhotoObj } from "../coffeeShop.utils";
 
 export default {
   Mutation: {
-    deleteCopffeeShop: protectResolver(async (_, { id }, { loggedInUser }) => {
+    deleteCoffeeShop: protectResolver(async (_, { id }, { loggedInUser }) => {
       try {
         const coffeeShop = await client.coffeeShop.findUnique({
           where: { id },
