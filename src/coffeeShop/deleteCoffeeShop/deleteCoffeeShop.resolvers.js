@@ -20,6 +20,15 @@ export default {
             error: "Not authorized.",
           };
         }
+        await client.coffeeShopPhoto.deleteMany({
+          where: {
+            coffeeShopId: {
+              some: {
+                id,
+              },
+            },
+          },
+        });
         await client.coffeeShop.delete({
           where: {
             id,
