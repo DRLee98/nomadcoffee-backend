@@ -1,9 +1,9 @@
 import client from "../../client";
-import { protectedResolver } from "../users.utils";
+import { protectResolver } from "../users.utils";
 
 export default {
   Query: {
-    me: protectedResolver((_, __, { loggedInUser }) =>
+    me: protectResolver((_, __, { loggedInUser }) =>
       client.user.findUnique({ where: { id: loggedInUser.id } }),
     ),
   },
