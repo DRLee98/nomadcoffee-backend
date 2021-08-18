@@ -9,7 +9,12 @@ export default {
         skip: page ? (page - 1) * takeNum : 0,
         include: {
           user: true,
-          photos: true,
+          photos: {
+            select: { url: true },
+          },
+          categories: {
+            select: { name: true, slug: true },
+          },
         },
       }),
   },
