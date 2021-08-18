@@ -3,10 +3,13 @@ import uploader from "../upload/upload.utils";
 export const getCategoryObj = (categories) => {
   if (categories) {
     const categoriesList = categories.split(",") || [];
+    console.log(categoriesList);
     const filterList = categoriesList.filter(
       (category) => category.trim() !== "",
     );
+    console.log(filterList);
     return filterList.map((category) => {
+      console.log(category);
       const name = category.trim();
       const slug = getSlug(name);
       if (name !== "") {
@@ -22,6 +25,7 @@ export const getCategoryObj = (categories) => {
 };
 
 const getSlug = (category) => {
+  console.log(category);
   return category.replaceAll(" ", "_").toLowerCase();
 };
 
