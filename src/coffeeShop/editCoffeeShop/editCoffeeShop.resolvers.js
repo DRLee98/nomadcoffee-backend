@@ -7,7 +7,7 @@ export default {
     editCoffeeShop: protectResolver(
       async (
         _,
-        { id, name, latitude, longitude, categories, photos },
+        { id, name, latitude, longitude, address, categories, photos },
         { loggedInUser },
       ) => {
         try {
@@ -40,6 +40,7 @@ export default {
               name,
               latitude,
               longitude,
+              address,
               ...(categoryObj.length > 0 && {
                 categories: {
                   disconnect: coffeeShop.categories.map((category) => ({
