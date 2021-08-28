@@ -36,9 +36,13 @@ export default {
               }),
             },
           });
+          const photoUrls = [];
+          photoObj.forEach((photo) => photoUrls.push(photo.url));
+          console.log(photoUrls);
           return {
             ok: true,
             id: coffeeShop.id,
+            photoUrls,
           };
         } catch (error) {
           console.log(error);

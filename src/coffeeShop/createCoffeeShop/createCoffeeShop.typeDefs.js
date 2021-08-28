@@ -5,6 +5,7 @@ export default gql`
     ok: Boolean!
     error: String
     id: Int
+    photoUrls: [String!]
   }
   type Mutation {
     createCoffeeShop(
