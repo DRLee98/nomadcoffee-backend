@@ -11,7 +11,7 @@ export default {
         skip: page ? (page - 1) * takeNum : 0,
         include: {
           user: {
-            select: { id: true, avatarURL: true },
+            select: { id: true, avatarURL: true, username: true },
           },
           photos: {
             select: { url: true },
