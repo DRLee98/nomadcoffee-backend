@@ -21,9 +21,12 @@ model User {
   githubUsername String?
   following      User[]       @relation("FollowRelation", references: [id])
   followers      User[]       @relation("FollowRelation", references: [id])
+  shops          CoffeeShop[]
+  comments       Comment[]
+  replies        Reply[]
+  likes          Like[]
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
-  CoffeeShop     CoffeeShop[]
 }
 
 model CoffeeShopPhoto {
@@ -45,6 +48,8 @@ model CoffeeShop {
   userId     Int
   photos     CoffeeShopPhoto[]
   categories Category[]
+  comments   Comment[]
+  likes      Like[]
   createdAt  DateTime          @default(now())
   updatedAt  DateTime          @updatedAt
 }
@@ -54,4 +59,37 @@ model Category {
   name  String       @unique
   slug  String       @unique
   shops CoffeeShop[]
+}
+
+model Comment {
+  id           Int        @id @default(autoincrement())
+  payload      String
+  shop         CoffeeShop @relation(fields: [coffeeShopId], references: [id])
+  coffeeShopId Int
+  user         User       @relation(fields: [userId], references: [id])
+  userId       Int
+  replies      Reply[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Reply {
+  id        Int      @id @default(autoincrement())
+  payload   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  comment   Comment  @relation(fields: [commentId], references: [id])
+  commentId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Like {
+  id           Int        @id @default(autoincrement())
+  user         User       @relation(fields: [userId], references: [id])
+  userId       Int
+  shop         CoffeeShop @relation(fields: [coffeeShopId], references: [id])
+  coffeeShopId Int
+
+  @@unique([userId, coffeeShopId])
 }

@@ -13,6 +13,20 @@ export default {
           categories: {
             select: { name: true, slug: true },
           },
+          comments: {
+            select: {
+              id: true,
+              payload: true,
+              createdAt: true,
+              user: {
+                select: {
+                  id: true,
+                  username: true,
+                  avatarURL: true,
+                },
+              },
+            },
+          },
         },
       }),
   },
