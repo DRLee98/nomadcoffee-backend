@@ -57,8 +57,11 @@ export default {
               }),
             },
           });
+          const photoUrls = [];
+          photoObj.forEach((photo) => photoUrls.push(photo.url));
           return {
             ok: true,
+            ...(photoUrls.length > 0 && {photoUrls})
           };
         } catch (error) {
           console.log(error);

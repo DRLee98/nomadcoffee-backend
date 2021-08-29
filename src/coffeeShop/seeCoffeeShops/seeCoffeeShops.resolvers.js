@@ -7,6 +7,9 @@ export default {
       const totalCount = await client.coffeeShop.count();
       const totalPage = Math.ceil(totalCount / takeNum);
       const shops = await client.coffeeShop.findMany({
+        orderBy: {
+          createdAt: "desc",
+        },
         take: takeNum,
         skip: page ? (page - 1) * takeNum : 0,
         include: {
