@@ -6,15 +6,18 @@ export default {
     totalComments: ({ id }) =>
       client.comment.count({ where: { shop: { id } } }),
     isLiked: async ({ id }, _, { loggedInUser }) => {
-      const isLiked = await client.like.findUnique({
-        where: {
-          userId_coffeeShopId: {
-            userId: loggedInUser.id,
-            coffeeShopId: id,
+      if (loggedInUser) {
+        const isLiked = await client.like.findUnique({
+          where: {
+            userId_coffeeShopId: {
+              userId: loggedInUser.id,
+              coffeeShopId: id,
+            },
           },
-        },
-      });
-      return Boolean(isLiked);
+        });
+        return Boolean(isLiked);
+      }
+      return false;
     },
   },
   Category: {
