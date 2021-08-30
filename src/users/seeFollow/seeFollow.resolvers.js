@@ -3,7 +3,7 @@ import { takeNum } from "../../common/common.constants";
 
 export default {
   Query: {
-    seeUser: async (_, { id, followersPage, followingPage }) => {
+    seeFollow: async (_, { id, followersPage, followingPage }) => {
       try {
         const user = await client.user.findUnique({ where: { id } });
         if (!user) {
