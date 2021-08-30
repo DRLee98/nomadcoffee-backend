@@ -3,7 +3,7 @@ import { takeNum } from "../../common/common.constants";
 
 export default {
   Query: {
-    seeUser: async (_, { id, followersPage, followingLastId }) => {
+    seeUser: async (_, { id, followersPage, followingPage }) => {
       try {
         const user = await client.user.findUnique({ where: { id } });
         if (!user) {
@@ -18,15 +18,16 @@ export default {
         });
         const following = await user.following({
           take: takeNum,
-          skip: followingLastId ? 1 : 0,
-          ...(followingLastId && { cursor: { id: followingLastId } }),
+          skip: followingPage ? (followingPage - 1) * takeNum : 0,
         });
         const totalFollowersPages = Math.ceil(user.totalFollowers / takeNum);
+        const totalFollowingPages = Math.ceil(user.totalFollowing / takeNum);
         return {
           ok: true,
           followers,
           totalFollowersPages,
           following,
+          totalFollowingPages,
         };
       } catch (error) {
         console.log(error);
