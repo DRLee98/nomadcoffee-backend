@@ -26,7 +26,7 @@ export default {
               email,
               name,
               location,
-              avatarURL,
+              ...(avatarURL && { avatarURL }),
               ...(password && { password: hashPassword }),
             },
           });
