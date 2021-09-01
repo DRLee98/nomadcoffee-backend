@@ -3,16 +3,6 @@ import { takeNum } from "../common/common.constants";
 
 export default {
   User: {
-    following: ({ id }, { page }) =>
-      client.user
-        .findUnique({ where: { id } })
-        .following({ skip: page ? (page - 1) * takeNum : 0, take: takeNum }),
-    followers: ({ id }, { lastId }) =>
-      client.user.findUnique({ where: { id } }).followers({
-        skip: lastId ? 1 : 0,
-        take: takeNum,
-        ...(lastId && { cursor: { id: lastId } }),
-      }),
     totalFollowing: ({ id }) =>
       client.user.count({ where: { followers: { some: { id } } } }),
     totalFollowers: ({ id }) =>
