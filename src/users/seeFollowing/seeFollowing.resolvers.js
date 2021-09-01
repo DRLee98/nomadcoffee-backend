@@ -14,10 +14,12 @@ export default {
             error: "User not found.",
           };
         }
-        const following = await user.following({
-          take: followTakeNum,
-          skip: page ? (page - 1) * followTakeNum : 0,
-        });
+        const following = await client.user
+          .findUnique({ where: { id } })
+          .following({
+            take: followTakeNum,
+            skip: page ? (page - 1) * followTakeNum : 0,
+          });
         const totalPage = Math.ceil(user.totalFollowing / followTakeNum);
         return {
           ok: true,
