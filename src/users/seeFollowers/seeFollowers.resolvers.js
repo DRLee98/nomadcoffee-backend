@@ -1,9 +1,11 @@
 import client from "../../client";
 import { takeNum } from "../../common/common.constants";
 
+const followTakeNum = takeNum * 3;
+
 export default {
   Query: {
-    seeFollow: async (_, { id, followersPage, followingPage }) => {
+    seeFollowers: async (_, { id, page }) => {
       try {
         const user = await client.user.findUnique({ where: { id } });
         if (!user) {
@@ -13,21 +15,14 @@ export default {
           };
         }
         const followers = await user.followers({
-          take: takeNum,
-          skip: followersPage ? (followersPage - 1) * takeNum : 0,
+          take: followTakeNum,
+          skip: page ? (page - 1) * followTakeNum : 0,
         });
-        const following = await user.following({
-          take: takeNum,
-          skip: followingPage ? (followingPage - 1) * takeNum : 0,
-        });
-        const totalFollowersPages = Math.ceil(user.totalFollowers / takeNum);
-        const totalFollowingPages = Math.ceil(user.totalFollowing / takeNum);
+        const totalPage = Math.ceil(user.totalFollowers / followTakeNum);
         return {
           ok: true,
           followers,
-          totalFollowersPages,
-          following,
-          totalFollowingPages,
+          totalPage,
         };
       } catch (error) {
         console.log(error);

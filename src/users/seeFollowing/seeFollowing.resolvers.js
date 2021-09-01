@@ -1,6 +1,8 @@
 import client from "../../client";
 import { takeNum } from "../../common/common.constants";
 
+const followTakeNum = takeNum * 3;
+
 export default {
   Query: {
     seeFollowing: async (_, { id, page }) => {
@@ -13,10 +15,10 @@ export default {
           };
         }
         const following = await user.following({
-          take: takeNum,
-          skip: page ? (page - 1) * takeNum : 0,
+          take: followTakeNum,
+          skip: page ? (page - 1) * followTakeNum : 0,
         });
-        const totalPage = Math.ceil(user.totalFollowing / takeNum);
+        const totalPage = Math.ceil(user.totalFollowing / followTakeNum);
         return {
           ok: true,
           following,
