@@ -21,7 +21,7 @@ export const getCategoryObj = (categories) => {
   return [];
 };
 
-const getSlug = (category) => {
+export const getSlug = (category) => {
   return category.replace(/ /gi, "_").toLowerCase();
 };
 

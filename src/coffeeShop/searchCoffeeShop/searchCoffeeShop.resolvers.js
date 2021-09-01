@@ -1,5 +1,6 @@
 import client from "../../client";
 import { takeNum } from "../../common/common.constants";
+import { getSlug } from "../coffeeShop.utils";
 
 const searchTakeNum = takeNum * 3;
 
@@ -9,7 +10,12 @@ export default {
       try {
         const totalCount = await client.coffeeShop.count({
           where: {
-            name: { contains: word },
+            OR: [
+              { name: { contains: word } },
+              {
+                categories: { some: { slug: getSlug(word) } },
+              },
+            ],
           },
         });
         const totalPage = Math.ceil(totalCount / searchTakeNum);
@@ -17,12 +23,18 @@ export default {
           take: searchTakeNum,
           skip: page ? (page - 1) * searchTakeNum : 0,
           where: {
-            name: { contains: word },
+            OR: [
+              { name: { contains: word } },
+              {
+                categories: { some: { slug: getSlug(word) } },
+              },
+            ],
           },
           include: {
             photos: {
               select: { url: true },
             },
+            categories: { select: { name: true, slug: true } },
           },
         });
         return {
