@@ -21,7 +21,7 @@ export default {
             skip: page ? (page - 1) * followTakeNum : 0,
           });
         const totalFollowers = await client.user.count({
-          where: { followers: { some: { id } } },
+          where: { following: { some: { id } } },
         });
         const totalPage = Math.ceil(totalFollowers / followTakeNum);
         return {
