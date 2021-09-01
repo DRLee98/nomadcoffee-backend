@@ -20,7 +20,10 @@ export default {
             take: followTakeNum,
             skip: page ? (page - 1) * followTakeNum : 0,
           });
-        const totalPage = Math.ceil(user.totalFollowing / followTakeNum);
+        const totalFollowing = await client.user.count({
+          where: { following: { some: { id } } },
+        });
+        const totalPage = Math.ceil(totalFollowing / followTakeNum);
         return {
           ok: true,
           following,
