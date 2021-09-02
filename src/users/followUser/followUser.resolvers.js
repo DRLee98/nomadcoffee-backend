@@ -12,6 +12,12 @@ export default {
             error: "That user does not exist.",
           };
         }
+        if (id === loggedInUser.id) {
+          return {
+            ok: false,
+            error: "Can't follow yourself",
+          };
+        }
         await client.user.update({
           where: {
             id: loggedInUser.id,
