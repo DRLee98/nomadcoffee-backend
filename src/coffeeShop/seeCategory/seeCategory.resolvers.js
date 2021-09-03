@@ -8,8 +8,13 @@ export default {
         where: { slug },
         include: {
           shops: {
-            take: takeNum,
-            skip: page ? (page - 1) * takeNum : 0,
+            take: takeNum * 3,
+            skip: page ? (page - 1) * (takeNum * 3) : 0,
+            include: {
+              photos: {
+                select: { url: true },
+              },
+            },
           },
         },
       }),
