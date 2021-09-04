@@ -4,6 +4,9 @@ export default {
   Query: {
     seeReplies: (_, { commentId }) =>
       client.reply.findMany({
+        orderBy: {
+          createdAt: "desc",
+        },
         where: {
           comment: {
             id: commentId,
