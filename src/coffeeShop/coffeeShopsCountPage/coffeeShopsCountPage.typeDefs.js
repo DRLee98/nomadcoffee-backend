@@ -6,6 +6,6 @@ export default gql`
     totalPage: Int!
   }
   type Query {
-    coffeeShopsCountPage(page: Int): CoffeeShopsCountPageResult
+    coffeeShopsCountPage: CoffeeShopsCountPageResult
   }
 `;
