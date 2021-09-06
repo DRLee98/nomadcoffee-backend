@@ -32,6 +32,7 @@ export default {
           }
           const categoryObj = getCategoryObj(categories);
           const photoObj = await getPhotoObj(photos);
+          console.log(photoObj);
           await client.coffeeShop.update({
             where: {
               id,
@@ -61,7 +62,7 @@ export default {
           photoObj.forEach((photo) => photoUrls.push(photo.url));
           return {
             ok: true,
-            ...(photoUrls.length > 0 && {photoUrls})
+            ...(photoUrls.length > 0 && { photoUrls }),
           };
         } catch (error) {
           console.log(error);
