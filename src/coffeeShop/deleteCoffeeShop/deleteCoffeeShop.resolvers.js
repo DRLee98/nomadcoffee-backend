@@ -7,6 +7,13 @@ export default {
       try {
         const coffeeShop = await client.coffeeShop.findUnique({
           where: { id },
+          include: {
+            photos: {
+              select: {
+                url: true,
+              },
+            },
+          },
         });
         if (!coffeeShop) {
           return {

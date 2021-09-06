@@ -47,4 +47,35 @@ const awsUploader = async (file) => {
 
 const uploader = (file) => awsUploader(file);
 
+const deleteFile = async (url) => {
+  AWS.config.update({
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY,
+      secretAccessKey: process.env.AWS_PRIVATE_KEY,
+    },
+  });
+  try {
+    if (url) {
+      const Key = url.split(`nomad-coffee",.s3.amazonaws.com/`)[1];
+      await new AWS.S3()
+        .deleteObject(
+          {
+            Bucket: "nomad-coffee",
+            Key,
+          },
+          (err, data) => {
+            if (err) {
+              throw err;
+            }
+            return { ok: true };
+          },
+        )
+        .promise();
+    }
+  } catch (e) {
+    console.log(e);
+    return { ok: false, error: e };
+  }
+};
+
 export default uploader;

@@ -31,6 +31,7 @@ export default {
             };
           }
           const categoryObj = getCategoryObj(categories);
+          console.log(categoryObj);
           const photoObj = await getPhotoObj(photos);
           console.log(photoObj);
           await client.coffeeShop.update({

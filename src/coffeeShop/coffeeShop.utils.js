@@ -26,10 +26,12 @@ export const getSlug = (category) => {
 };
 
 export const getPhotoObj = async (photos) => {
+  console.log(photos);
   if (photos) {
     return await Promise.all(
       photos.map(async (photo) => {
         const url = await uploader(photo);
+        console.log(url);
         return { url };
       }),
     );
