@@ -11,6 +11,15 @@ export default {
         { loggedInUser },
       ) => {
         try {
+          console.log(
+            id,
+            name,
+            latitude,
+            longitude,
+            address,
+            categories,
+            photos,
+          );
           const coffeeShop = await client.coffeeShop.findUnique({
             where: { id },
             include: {
@@ -31,9 +40,7 @@ export default {
             };
           }
           const categoryObj = getCategoryObj(categories);
-          console.log(categoryObj);
           const photoObj = await getPhotoObj(photos);
-          console.log(photoObj);
           await client.coffeeShop.update({
             where: {
               id,
