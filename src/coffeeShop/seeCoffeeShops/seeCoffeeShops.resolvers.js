@@ -3,10 +3,8 @@ import { takeNum } from "../../common/common.constants";
 
 export default {
   Query: {
-    seeCoffeeShops: async (_, { page }) => {
-      const totalCount = await client.coffeeShop.count();
-      const totalPage = Math.ceil(totalCount / takeNum);
-      const shops = await client.coffeeShop.findMany({
+    seeCoffeeShops: (_, { page }) =>
+      client.coffeeShop.findMany({
         orderBy: {
           createdAt: "desc",
         },
@@ -23,12 +21,6 @@ export default {
             select: { name: true, slug: true },
           },
         },
-      });
-      return {
-        totalCount,
-        totalPage,
-        shops,
-      };
-    },
+      }),
   },
 };
